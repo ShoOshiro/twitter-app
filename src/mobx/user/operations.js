@@ -101,3 +101,22 @@ export const signOut = (history) => {
             history.push('/signin')
         })
 }
+
+export const resetPassword = (email, history) => {
+    if(email === ''){
+        alert('必須項目が未入力です')
+        return false
+    } else {
+        alert('パスワードリセットは現在開発中です')
+        history.push('/signin')
+        // TODO: research sendPasswordResetEmail method
+
+        // auth.sendPasswordResetEmail(email)
+        //     .then(() => {
+        //         alert('入力されたアドレスにパスワードリセット用のメールを送りました')
+        //         history.push('/signin')
+        //     }).catch(() => {
+        //         alert('パスワードリセットに失敗しました')
+        //     })
+    }
+}

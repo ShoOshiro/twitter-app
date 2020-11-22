@@ -15,6 +15,9 @@ class TimeLine extends React.Component{
     signOut = () => {
         signOut(this.props.history)
     }
+    toProfile = () => {
+        this.props.history.push('/profile')
+    }
 
     render(){
         
@@ -28,6 +31,10 @@ class TimeLine extends React.Component{
                 <PrimaryButton
                     label={'sign out test'}
                     onClick={this.signOut}
+                />
+                <PrimaryButton
+                    label={'to profile page'}
+                    onClick={this.toProfile}
                 />
             </div>
         )

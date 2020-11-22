@@ -55,6 +55,9 @@ class SignUp extends React.Component {
                     label={'アカウントを登録する'}
                     onClick={this.registerAccount}
                 />
+                <p onClick={() => {this.props.history.push('/signin')}}>
+                    アカウントをお持ちの方はこちら
+                </p>
             </div>
         )
     }

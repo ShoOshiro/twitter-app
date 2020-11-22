@@ -39,6 +39,12 @@ class SignIn extends React.Component {
                     label={'ログイン'}
                     onClick={this.signIn}
                 />
+                <p onClick={() => {this.props.history.push('/signup')}}>
+                    アカウントをお持ちでない方はこちら
+                </p>
+                <p onClick={() => {this.props.history.push('/signin/reset')}}>
+                    パスワードを忘れた方はこちら
+                </p>
             </div>
         )
     }
