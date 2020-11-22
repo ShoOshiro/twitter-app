@@ -1,4 +1,4 @@
-import UserStore from './user/UserStore';
+import UserStore from './user/userStore';
 // import TweetStore from './tweet/tweetStore';
 
 export default {UserStore};

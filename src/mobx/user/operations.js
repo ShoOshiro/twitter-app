@@ -1,5 +1,5 @@
 import {auth, FirebaseTimestamp, db} from '../../firebase/index'
-import UserStore from './UserStore'
+import UserStore from './userStore'
 
 
 export const signUp = (userName, email, password, confirmPassword, history) => {
@@ -20,7 +20,6 @@ export const signUp = (userName, email, password, confirmPassword, history) => {
             const user = result.user
 
             if(user) {
-                console.log("result has user.")
                 const uid = user.uid
                 const timestamp = FirebaseTimestamp.now()
                 const userInitialData = {
@@ -32,7 +31,7 @@ export const signUp = (userName, email, password, confirmPassword, history) => {
                 }
                 db.collection('users').doc(uid).set(userInitialData)
                     .then(() => {
-                        console.log("db set completed.")
+                        console.log("New account is set to db.")
                         history.push('/')
                     })
             }
@@ -52,13 +51,11 @@ export const signIn = (email, password, history) => {
             const user = result.user
 
             if(user) {
-                console.log("result has user.")
                 const uid = user.uid
 
                 db.collection('users').doc(uid).get()
                     .then((snapshot) => {
                         const data = snapshot.data()
-                        //TODO set data of signin user to store.
 
                         UserStore.setSignInUser({
                             uid: data.uid,
@@ -66,7 +63,7 @@ export const signIn = (email, password, history) => {
                             email: data.email,
                             isSignIn: true
                         })
-                        console.log("signin completed.")
+                        console.log("Signin completed.")
                         history.push('/')
                     })
             }
@@ -76,17 +73,22 @@ export const signIn = (email, password, history) => {
 export const listenAuthState = (history) => {
     return auth.onAuthStateChanged(user => {
         if(user) {
-            
             const uid = user.uid
-
             db.collection('users').doc(uid).get()
                 .then((snapshot) => {
                     const data = snapshot.data()
-                    //TODO set data of signin user to store.
-                    console.log("signin completed.")
+                    UserStore.setSignInUser({
+                        uid: data.uid,
+                        userName: data.userName,
+                        email: data.email,
+                        isSignIn: true
+                    })
+                    console.log("Listen Auth: user signed in.")
+                    // NOTE: this code can be incorrect when pathname is changed to /profile by push method.
                     history.push('/')
                 })
         } else {
+            console.log('Please sign in')
             history.push('/signin');
         }
     })
@@ -95,8 +97,7 @@ export const listenAuthState = (history) => {
 export const signOut = (history) => {
     auth.signOut()
         .then(() => {
-            // TODO: set signout data to Mobx
-            
+            UserStore.signOutUser()
             history.push('/signin')
         })
 }

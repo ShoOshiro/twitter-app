@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {SignUp, SignIn, TimeLine, Profile} from './components'
+import {SignUp, SignIn, TimeLine, Profile} from './components';
+import Auth from './Auth';
 
 const Router = () => {
     return(
@@ -8,8 +9,10 @@ const Router = () => {
             <Switch>
                 <Route exact path={"/signup"} component={SignUp}/>
                 <Route exact path={"/signin"} component={SignIn}/>
-                <Route exact path={"(/)?"} component={TimeLine}/>
-                <Route exact path={"/profile"} component={Profile}/>
+                <Auth>
+                    <Route exact path={"(/)?"} component={TimeLine}/>
+                    <Route exact path={"/profile"} component={Profile}/>
+                </Auth>
             </Switch>
         </BrowserRouter>
     )
