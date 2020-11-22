@@ -1,11 +1,25 @@
-import React from 'react'
+import React from 'react';
+import { observer, inject } from "mobx-react"
 
-const TimeLine = () => {
-    return(
-        <div>
-            <h2>TimeLine</h2>
-        </div>
-    )
+@inject('UserStore')
+@observer
+class TimeLine extends React.Component{
+
+    constructor(props){
+        super(props);
+    }
+
+    render(){
+        
+        return(
+            <div>
+                <h2>TimeLine</h2>
+                <h4>{this.props.UserStore.userName}</h4>
+                <h4>{this.props.UserStore.email}</h4>
+                <h4>{this.props.UserStore.uid}</h4>
+            </div>
+        )
+    }
+    
 }
-
-export default TimeLine
+export default TimeLine;

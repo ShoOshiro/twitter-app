@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import stores from './mobx/store';
+import {Provider} from 'mobx-react';
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider {...stores}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>
+    ,
   document.getElementById('root')
 );
 
