@@ -26,7 +26,7 @@ class SignIn extends React.Component {
     render(){
         return (
             <div>
-                <h2>アカウント登録</h2>
+                <h2>ログイン</h2>
                 <TextInput
                     isFullWidth={true} label={'メールアドレス'} isMultiline={false} isRequired={true}
                     rows={1} value={this.state.email} type={'email'} onChange={this.inputEmail}

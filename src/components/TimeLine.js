@@ -1,9 +1,10 @@
 import React from 'react';
 import { observer, inject } from "mobx-react"
 import { PrimaryButton } from '../common/ui-kit';
+import {PostTweet, DisplayTweets} from './'
 import {signOut} from '../mobx/user/operations'
 
-@inject('UserStore')
+@inject('UserStore', 'TweetStore')
 @observer
 class TimeLine extends React.Component{
 
@@ -24,18 +25,8 @@ class TimeLine extends React.Component{
         return(
             <div>
                 <h2>TimeLine</h2>
-                {/* // NOTE: Test code to check if user operation is successful. */}
-                <h4>{this.props.UserStore.userName}</h4>
-                <h4>{this.props.UserStore.email}</h4>
-                <h4>{this.props.UserStore.uid}</h4>
-                <PrimaryButton
-                    label={'sign out test'}
-                    onClick={this.signOut}
-                />
-                <PrimaryButton
-                    label={'to profile page'}
-                    onClick={this.toProfile}
-                />
+                <PostTweet/>
+                <DisplayTweets/>
             </div>
         )
     }
