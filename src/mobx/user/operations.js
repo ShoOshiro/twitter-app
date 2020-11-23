@@ -1,5 +1,5 @@
 import {auth, FirebaseTimestamp, db} from '../../firebase/index'
-import UserStore from './userStore'
+import UserStore from './UserStore'
 
 
 export const signUp = (userName, email, password, confirmPassword, history) => {
@@ -84,8 +84,7 @@ export const listenAuthState = (history) => {
                         isSignIn: true
                     })
                     console.log("Listen Auth: user signed in.")
-                    // NOTE: this code can be incorrect when pathname is changed to /profile by push method.
-                    history.push('/')
+                    history.push('/');
                 })
         } else {
             console.log('Please sign in')
