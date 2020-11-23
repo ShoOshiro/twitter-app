@@ -1,5 +1,5 @@
 import {auth, FirebaseTimestamp, db} from '../../firebase/index'
-import UserStore from './userStore'
+import UserStore from './UserStore'
 
 
 export const signUp = (userName, email, password, confirmPassword, history) => {
