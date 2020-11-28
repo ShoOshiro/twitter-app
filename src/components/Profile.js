@@ -14,6 +14,9 @@ class Profile extends React.Component{
         this.props.history.push('/')
     }
 
+
+    // ToDo 1.返したURLをimgタグで表示できるようにする。
+    // ToDo 2.引数でユーザを指定できるようにする。
     displayUserImage = () => {
         return storageRef.child(`userImage/defaultUserImage.png`).getDownloadURL()
             .then((url) => { 
