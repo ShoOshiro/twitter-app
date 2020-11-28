@@ -24,6 +24,7 @@ class TimeLine extends React.Component{
         
         return(
             <div>
+                <button onClick={this.toProfile}>profile画面</button>
                 <h2>TimeLine</h2>
                 <PostTweet/>
                 <DisplayTweets/>
