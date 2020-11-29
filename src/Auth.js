@@ -1,5 +1,5 @@
 import React from 'react'
-import UserStore from './mobx/user/userStore'
+import UserStore from './mobx/user/UserStore'
 import {listenAuthState} from './mobx/user/operations'
 import { withRouter } from 'react-router';
 
