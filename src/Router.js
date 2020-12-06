@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {SignUp, SignIn, ResetPassword, TimeLine, Profile} from './components';
+import {SignUp, SignIn, ResetPassword, TimeLine, Profile, EditProfile} from './components';
 import Auth from './Auth';
 
 const Router = () => {
@@ -13,6 +13,7 @@ const Router = () => {
                 <Auth>
                     <Route exact path={"(/)?"} component={TimeLine}/>
                     <Route exact path={"/profile"} component={Profile}/>
+                    <Route exact path={"/profile/edit"} component={EditProfile}/>
                 </Auth>
             </Switch>
         </BrowserRouter>
