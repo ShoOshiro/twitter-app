@@ -43,3 +43,12 @@ export const fetchTweets = () => {
             TweetStore.setTweetList(tweetList)
         })    
 }
+
+export const deleteTweet = (tweetId) => {
+    tweetsRef.doc(tweetId).delete().then(function() {
+        console.log("Document successfully deleted!");
+        fetchTweets()
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
+}

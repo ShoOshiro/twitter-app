@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer, inject } from "mobx-react"
-import {fetchTweets} from '../mobx/tweet/operations'
+import { MenuButton} from '../common/ui-kit'
+import {deleteTweet} from '../mobx/tweet/operations'
 
 @inject('TweetStore')
 @observer
@@ -9,12 +10,19 @@ class DisplayTweets extends React.Component {
         super(props)
     }
 
-    componentDidMount = () => {
-        fetchTweets()
+    // TODO: handling clicked menu should move to common directory.
+    handleClickMenu = (clickedIndex, tweetId) => {
+        switch(clickedIndex){
+            case 0:
+                deleteTweet(tweetId)
+                break;
+            default:
+                break;
+        }
     }
 
     render(){
-        const tweets = this.props.TweetStore.tweets
+        const tweets = this.props.tweets;
         return(
             <div>
                 <h4>display tweet list</h4>
@@ -24,6 +32,12 @@ class DisplayTweets extends React.Component {
                             <div>
                                 <p>tweet id: {tweet.uid}</p>
                                 <p>tweet content: {tweet.content}</p>
+                                <MenuButton
+                                    tweetId={tweet.id}
+                                    iconName={"format_list_bulleted"}
+                                    items={["Delete", "profile"]}
+                                    handleClickMenu={this.handleClickMenu}
+                                />
                             </div>
                         )
                     }) : 
