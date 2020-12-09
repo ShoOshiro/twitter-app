@@ -1,4 +1,4 @@
-import {auth, FirebaseTimestamp, db} from '../../firebase/index'
+import {auth, FirebaseTimestamp, db, storage} from '../../firebase/index'
 import UserStore from './UserStore'
 
 
@@ -60,6 +60,7 @@ export const signIn = (email, password, history) => {
                         UserStore.setSignInUser({
                             uid: data.uid,
                             userName: data.userName,
+                            userImageUrl: data.userImageUrl,
                             email: data.email,
                             isSignIn: true
                         })
@@ -80,10 +81,12 @@ export const listenAuthState = (history) => {
                     UserStore.setSignInUser({
                         uid: data.uid,
                         userName: data.userName,
+                        userImageUrl: data.userImageUrl,
                         email: data.email,
                         isSignIn: true
                     })
                     console.log("Listen Auth: user signed in.")
+                    // FIX Me.
                     history.push('/');
                 })
         } else {
@@ -118,4 +121,34 @@ export const resetPassword = (email, history) => {
         //         alert('パスワードリセットに失敗しました')
         //     })
     }
+}
+
+export const saveProfile = (userImage, userName, bio, history) => {
+
+    const currentUser= auth.currentUser;
+    let blob = new Blob([userImage], {type: "image/jpeg"});
+    const uploadRef = storage.ref('userImage').child(currentUser.uid);
+    const uploadTask = uploadRef.put(blob);
+    uploadTask.then(() => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) =>{
+            UserStore.setUserImage(downloadURL)
+            console.log('save user image successful')
+
+            const timestamp = FirebaseTimestamp.now()
+            const profileData = {
+                userName: userName,
+                userImageUrl: downloadURL,
+                bio: bio,
+                updated_at: timestamp
+            }
+
+            db.collection('users').doc(currentUser.uid).set({...profileData},{merge: true})
+                .then(() => {
+                    console.log('save user profile successful')
+                    UserStore.updateProfile(profileData)
+                })
+        })
+    }).catch(() => {
+        console.log("image upload error")
+    })
 }

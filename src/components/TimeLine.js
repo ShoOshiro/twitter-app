@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from "mobx-react"
-import { PrimaryButton } from '../common/ui-kit';
+import {fetchTweets} from '../mobx/tweet/operations'
 import {PostTweet, DisplayTweets} from './'
 import {signOut} from '../mobx/user/operations'
 
@@ -12,6 +12,10 @@ class TimeLine extends React.Component{
         super(props);
     }
 
+    componentDidMount = () => {
+        fetchTweets()
+    }
+
     // NOTE: Test code to check if sign out is successful.
     signOut = () => {
         signOut(this.props.history)
@@ -21,12 +25,12 @@ class TimeLine extends React.Component{
     }
 
     render(){
-        
+        const tweets = this.props.TweetStore.tweets        
         return(
             <div>
                 <h2>TimeLine</h2>
                 <PostTweet/>
-                <DisplayTweets/>
+                <DisplayTweets tweets={tweets}/>
             </div>
         )
     }

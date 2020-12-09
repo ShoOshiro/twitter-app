@@ -7,3 +7,4 @@ export {default as PostTweet} from './PostTweet'
 export {default as DisplayTweets} from './DisplayTweets'
 
 export {default as Profile} from './Profile'
+export {default as EditProfile} from './EditProfile'

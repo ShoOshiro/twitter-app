@@ -5,6 +5,8 @@
   "dependencies": {
     "@babel/core": "7.12.3",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/system": "^4.11.2",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
     "@svgr/webpack": "5.4.0",
     "@testing-library/jest-dom": "^5.11.6",
@@ -154,7 +156,8 @@
   "babel": {
     "presets": [
       "react-app",
-      ["@babel/preset-env",
+      [
+        "@babel/preset-env",
         {
           "targets": {
             "esmodules": true
@@ -163,8 +166,18 @@
       ]
     ],
     "plugins": [
-      ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      ["@babel/plugin-proposal-class-properties", { "loose": false }]
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": false
+        }
+      ]
     ]
   }
 }
