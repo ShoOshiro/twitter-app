@@ -1,6 +1,11 @@
 import React from 'react'
 import {TextInput, PrimaryButton} from '../common/ui-kit/index';
-import {postTweet} from '../mobx/tweet/operations'
+import {postTweet} from '../mobx/tweet/operations';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
 
 class PostTweet extends React.Component {
     constructor(props){
@@ -20,16 +25,29 @@ class PostTweet extends React.Component {
 
     render(){
         return(
-            <div>
-                <h4>Tweet</h4>
-                <TextInput
-                    isFullWidth={true} label={'今何してる？'} isMultiline={true} isRequired={true}
-                    rows={5} value={this.state.tweetContent} type={'text'} onChange={this.inputTweetContent}
-                />
-                <PrimaryButton
-                    label={'投稿する'}
-                    onClick={this.postTweet}
-                />
+            <div className="area-margin">
+                <Card>
+                    <CardHeader
+                        avatar={
+                        <Avatar aria-label="recipe">
+                            R
+                        </Avatar>
+                        }
+                        title="What is happening?"
+                    />
+                    <CardContent>
+                        <TextInput
+                            isFullWidth={true} label={'今何してる？'} isMultiline={true} isRequired={true}
+                            rows={5} value={this.state.tweetContent} type={'text'} onChange={this.inputTweetContent}
+                        />
+                    </CardContent>
+                    <CardActions disableSpacing>
+                        <PrimaryButton
+                            label={'投稿する'}
+                            onClick={this.postTweet}
+                        />
+                    </CardActions>
+                </Card>
             </div>
         );
     }
