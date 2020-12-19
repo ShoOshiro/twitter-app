@@ -27,8 +27,7 @@ class TimeLine extends React.Component{
     render(){
         const tweets = this.props.TweetStore.tweets        
         return(
-            <div>
-                <h2>TimeLine</h2>
+            <div className="container">
                 <PostTweet/>
                 <DisplayTweets tweets={tweets}/>
             </div>
