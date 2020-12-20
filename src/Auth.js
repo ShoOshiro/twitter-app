@@ -2,6 +2,7 @@ import React from 'react'
 import UserStore from './mobx/user/UserStore'
 import {listenAuthState} from './mobx/user/operations'
 import { withRouter } from 'react-router';
+import {SideMenu} from './common/component-area'
 
 class Auth extends React.Component{
     
@@ -22,7 +23,12 @@ class Auth extends React.Component{
         if(!isSignIn){
             return null
         } else {
-            return children
+            return (
+                <div className="flex container">
+                    <SideMenu/>
+                    {children}
+                </div>
+            )
         }
     }
 

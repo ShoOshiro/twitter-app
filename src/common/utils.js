@@ -1,4 +1,5 @@
 export const TIMELINE_PATH = '/';
+export const TWEET_DETAIL_PATH = '/tweet/detail/:tweetId'
 
 export const PROFILE_PATH = '/profile';
 export const PROFILE_EDIT_PATH = '/profile/edit';
