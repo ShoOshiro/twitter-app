@@ -44,6 +44,13 @@ export const fetchTweets = () => {
         })    
 }
 
+export const fetchSelectedTweet = (tweetId) => {
+    tweetsRef.doc(tweetId).get()
+        .then((snapshot) => {
+            TweetStore.setSelectedTweet(snapshot.data())
+        })
+}
+
 export const deleteTweet = (tweetId) => {
     tweetsRef.doc(tweetId).delete().then(function() {
         console.log("Document successfully deleted!");

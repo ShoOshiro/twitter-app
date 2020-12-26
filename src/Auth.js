@@ -2,6 +2,7 @@ import React from 'react'
 import UserStore from './mobx/user/UserStore'
 import {listenAuthState} from './mobx/user/operations'
 import { withRouter } from 'react-router';
+import {SideMenu} from './common/component-area'
 
 class Auth extends React.Component{
     
@@ -18,22 +19,16 @@ class Auth extends React.Component{
 
     render(){
         const isSignIn = UserStore.isSignIn
-        const {location, children} = this.props;
+        const {children} = this.props;
         if(!isSignIn){
-            return <></>
+            return null
         } else {
-            return children
-            // NOTE: this code can be incorrect when pathname is changed to /profile by push method.
-            // switch (location.pathname){
-            //     case '/':
-            //         return children[0]
-            //     case '/profile':
-            //         return children[1]
-            //     case '/profile/edit':
-            //         return children[2]
-            //     default:
-            //         return children[0]
-            // }
+            return (
+                <div className="flex container">
+                    <SideMenu/>
+                    {children}
+                </div>
+            )
         }
     }
 
