@@ -16,7 +16,7 @@ class ImageArea extends React.Component{
         let imgtag = document.getElementById("selected-image");
         imgtag.title = selectedFile.name;
         reader.onload = function(event) {
-          imgtag.src = event.target.result;
+            imgtag.src = event.target.result;
         };
         reader.readAsDataURL(selectedFile);
 
@@ -26,7 +26,7 @@ class ImageArea extends React.Component{
     render(){
         return(
             <div>
-                <img style={{ width: "100%" }} id="selected-image" alt="" />
+                <img style={{float:'left', width: "15%" }} id="selected-image" alt="" />
                 <IconButton>
                     <label>
                         <AddPhotoAlternateIcon />
