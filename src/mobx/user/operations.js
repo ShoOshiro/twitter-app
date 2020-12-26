@@ -56,11 +56,12 @@ export const signIn = (email, password, history) => {
                 db.collection('users').doc(uid).get()
                     .then((snapshot) => {
                         const data = snapshot.data()
-
+                        
                         UserStore.setSignInUser({
                             uid: data.uid,
                             userName: data.userName,
                             userImageUrl: data.userImageUrl,
+                            bio: data.bio,
                             email: data.email,
                             isSignIn: true
                         })
@@ -82,6 +83,7 @@ export const listenAuthState = (history) => {
                         uid: data.uid,
                         userName: data.userName,
                         userImageUrl: data.userImageUrl,
+                        bio: data.bio,
                         email: data.email,
                         isSignIn: true
                     })

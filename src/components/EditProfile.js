@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageArea} from '../common/component-area'
+import {ImageArea, UserImage} from '../common/component-area'
 import { PrimaryButton, TextInput } from '../common/ui-kit';
 import {saveProfile} from '../mobx/user/operations';
 import ReactModal from 'react-modal';
@@ -9,9 +9,9 @@ class EditProfile extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            userImage: null,
-            userName: '',
-            bio: '',
+            userImage: props.userData.userImageUrl,
+            userName: props.userData.userName,
+            bio: props.userData.bio,
         }
     }
 
@@ -36,16 +36,24 @@ class EditProfile extends React.Component {
             <div>
                 <ReactModal
                     isOpen = {this.props.openModal}
+                    style={{
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto'}}
                 >
-                    <h1>edit profile</h1>
+                    <h1>edit</h1>
+                    <UserImage path={this.props.userData.userImageUrl} />
                     <ImageArea setSelectedFile={this.setSelectedFile} />
                     <TextInput
                         isFullWidth={true} label={'user name'} isMultiline={true} isRequired={false}
                         rows={5} value={this.state.userName} type={'text'} onChange={this.inputProfileUserName}
+                        defaultValue={this.props.userData.userName}
                     />
                     <TextInput
                         isFullWidth={true} label={'bio'} isMultiline={true} isRequired={false}
                         rows={5} value={this.state.bio} type={'text'} onChange={this.inputProfileBio}
+                        defaultValue={this.props.userData.bio}
                     />
                     <PrimaryButton
                         label={'Save'}

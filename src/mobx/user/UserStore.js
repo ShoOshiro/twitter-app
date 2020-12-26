@@ -16,6 +16,7 @@ class UserStore{
     @action setSignInUser = (signInUser) => {
         this.userName = signInUser.userName;
         this.userImageUrl = signInUser.userImageUrl;
+        this.bio = signInUser.bio;
         this.email = signInUser.email;
         this.uid = signInUser.uid;
         this.isSignIn = signInUser.isSignIn;
