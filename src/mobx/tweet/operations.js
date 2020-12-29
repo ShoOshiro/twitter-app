@@ -51,6 +51,18 @@ export const fetchSelectedTweet = (tweetId) => {
         })
 }
 
+export const fetchOwnTweets = (uid) => {
+    tweetsRef.where("uid", "==", uid).get()
+        .then((snapshots) => {
+            const ownTweetList = []
+            snapshots.forEach(snapshot => {
+                const tweet = snapshot.data()
+                ownTweetList.push(tweet)
+            })
+            TweetStore.setTweetList(ownTweetList)
+        })
+}
+
 export const deleteTweet = (tweetId) => {
     tweetsRef.doc(tweetId).delete().then(function() {
         console.log("Document successfully deleted!");

@@ -37,12 +37,16 @@ class EditProfile extends React.Component {
                 <ReactModal
                     isOpen = {this.props.openModal}
                     style={{
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto'}}
+                        overlay: {
+                            backgroundColor: 'rgba(204, 204, 204, 0.75)'
+                        },
+                        content: {
+                            maxWidth: '600px',
+                            margin: 'auto',
+                        }
+                    }}
                 >
-                    <h1>edit</h1>
+                    <h1>Edit Profile</h1>
                     <UserImage path={this.props.userData.userImageUrl} />
                     <ImageArea setSelectedFile={this.setSelectedFile} />
                     <TextInput
