@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {PrimaryButton} from '../common/ui-kit/index';
-
+import {fetchOwnTweets} from '../mobx/tweet/operations'
+import {DisplayTweets} from './'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -18,9 +19,15 @@ class Profile extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            isModalOpen: false
+            isModalOpen: false,
+            selectTab: 0
         }
     }
+
+    componentDidMount = () => {
+        fetchOwnTweets(this.props.UserStore.uid)
+    }
+
 
     openModal = () => {
         this.setState({isModalOpen: true})
@@ -30,10 +37,18 @@ class Profile extends React.Component {
         this.setState({isModalOpen: false})
     }
 
+    displayTab = (tweets) => {
+        if(this.state.selectTab === 0){
+            return <DisplayTweets tweets={tweets}/> 
+        }else if(this.state.selectTab === 1){
+            return <h2>'Good' will be displayed. It is under construction.</h2>
+        }
+    } 
+
     render(){
         const userData = this.props.UserStore;
         const tweets = this.props.TweetStore.tweets;
-        
+
         return (
             <div className="container">
                 <Card>
@@ -57,16 +72,16 @@ class Profile extends React.Component {
                 <PrimaryButton label={'followers'} style={{marginLeft: '5px', marginRight: '5px'}}/> 0   
                 <PrimaryButton label={'following'} style={{marginLeft: '5px', marginRight: '5px'}}/> 0
                 </Card>
+                {/* TODO: 脳筋Tabを辞めてreact-tab等を用いること。 */}
                 <Tabs
                     indicatorColor="primary"
                     textColor="primary"
                     aria-label="disabled tabs example"
                 >
-                    <Tab label="Tweets">
-                    </Tab>
-                    <Tab label="Likes♡">
-                    </Tab>
+                    <Tab label="Tweets" onClick={() => {this.setState({selectTab: 0})}}/>
+                    <Tab label="Likes♡" onClick={() => {this.setState({selectTab: 1})}}/>
                 </Tabs>
+                {this.displayTab(tweets)}    
             </div>
         )
     }
