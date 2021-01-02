@@ -1,7 +1,9 @@
-import {FirebaseTimestamp, auth, db} from '../../firebase/index'
+import {FirebaseTimestamp, auth, db, fieldValue} from '../../firebase/index'
 import TweetStore from './TweetStore'
+import UserStore from '../user/UserStore'
 
 const tweetsRef = db.collection('tweets')
+const replyTweetsRef = db.collection('replyTweets')
 
 export const postTweet = (tweetContent) => {
 
@@ -10,7 +12,10 @@ export const postTweet = (tweetContent) => {
 
     const data = {
         uid: currentUser.uid,
-        content: tweetContent
+        userName: UserStore.userName,
+        userImageUrl: UserStore.userImageUrl,
+        content: tweetContent,
+        replyIds: []
     }
 
     const ref = tweetsRef.doc();
@@ -64,10 +69,42 @@ export const fetchOwnTweets = (uid) => {
 }
 
 export const deleteTweet = (tweetId) => {
-    tweetsRef.doc(tweetId).delete().then(function() {
+    tweetsRef.doc(tweetId).delete().then(() => {
         console.log("Document successfully deleted!");
         fetchTweets()
-    }).catch(function(error) {
+    }).catch((error) => {
         console.error("Error removing document: ", error);
     });
+}
+
+export const postReply = (selectedTweet, replyContent) => {
+    const timestamp = FirebaseTimestamp.now()
+    const currentUser= auth.currentUser;
+    const data = {
+        uid: currentUser.uid,
+        userName: UserStore.userName,
+        userImageUrl: UserStore.userImageUrl,
+        content: replyContent,
+    }
+    const ref = replyTweetsRef.doc();
+    const id = ref.id
+    data.id = id
+    data.created_at = timestamp
+    data.updated_at = timestamp
+
+    replyTweetsRef.doc(id).set(data)
+        .then(() => {
+            console.log('save reply is successful')
+            fetchTweets()
+        }).catch((error) => {
+            throw new Error(error)
+        })
+    
+    return tweetsRef.doc(selectedTweet.id).update({
+        replyIds: fieldValue.arrayUnion(id)
+    }).then(() => {
+        console.log('related to reply tweet')
+    }).catch((error) => {
+        throw new Error(error)
+    })
 }

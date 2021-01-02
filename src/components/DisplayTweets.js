@@ -1,25 +1,27 @@
-import React from 'react'
-import { observer, inject } from "mobx-react"
-import { MenuButton} from '../common/ui-kit'
+import React from 'react';
+import { observer, inject } from "mobx-react";
+import { MenuButton} from '../common/ui-kit';
+import {UserImage} from '../common/component-area';
 import { withRouter } from 'react-router';
-import {deleteTweet} from '../mobx/tweet/operations'
+import {deleteTweet} from '../mobx/tweet/operations';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import {PostReply} from './';
 
 @inject('TweetStore')
 @observer
 class DisplayTweets extends React.Component {
     constructor(props){
         super(props)
+        this.state = {shouldDisplayReply: false, selectedReplyedTweet: {}}
     }
 
     // TODO: handling clicked menu should move to common directory.
@@ -34,7 +36,11 @@ class DisplayTweets extends React.Component {
     }
 
     handleClickReply = (tweet) => {
-        console.log(tweet.content)
+        this.setState({shouldDisplayReply: true, selectedReplyedTweet: tweet})
+    }
+
+    onClose = () => {
+        this.setState({shouldDisplayReply: false})
     }
 
     toTweetDetail = (tweet) => {
@@ -43,18 +49,17 @@ class DisplayTweets extends React.Component {
 
     render(){
         const tweets = this.props.tweets;
+        const userData = this.props.userData;
         return(
             <div>
                 {tweets ?
                     tweets.map((tweet) => {
                         return(
-                            <Card className="row-margin">
+                            <Card className="row-margin" key={tweet.id}>
                                 <CardActionArea onClick={this.toTweetDetail.bind(this, tweet)}>
                                     <CardHeader
                                         avatar={
-                                        <Avatar aria-label="recipe">
-                                            R
-                                        </Avatar>
+                                            <UserImage path={tweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
                                         }
                                         action={
                                             <MenuButton
@@ -64,7 +69,7 @@ class DisplayTweets extends React.Component {
                                                 handleClickMenu={this.handleClickMenu}
                                             />
                                         }
-                                        title="Shrimp and Chorizo Paella"
+                                        title={tweet.userName}
                                         subheader={tweet.updated_at.toDate().toDateString()}
                                     />
                                     <CardContent>
@@ -87,6 +92,14 @@ class DisplayTweets extends React.Component {
                             </Card>
                         )
                     }) : null
+                }
+                {this.state.shouldDisplayReply && 
+                    <PostReply
+                        shouldDisplayReply={this.state.shouldDisplayReply}
+                        selectedReplyedTweet={this.state.selectedReplyedTweet}
+                        onClose={this.onClose}
+                        userImageUrl={userData.userImageUrl}
+                    />
                 }
             </div>
         );

@@ -13,7 +13,6 @@ class TweetStore{
     @action setTweetList = (tweetList) => {
         this.tweets = tweetList;
         console.log("setTweetList. tweets are follow.");
-        console.log(this.tweets);
     }
 
     @action setSelectedTweet = (selectedTweet) => {

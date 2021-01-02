@@ -6,7 +6,7 @@ class UserStore{
     @observable userName = '';
     @observable email = '';
     @observable isSignIn = false;
-    @observable userImageUrl = null;
+    @observable userImageUrl = '';
     @observable bio = '';
 
     constructor() {
