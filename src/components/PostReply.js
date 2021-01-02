@@ -7,7 +7,7 @@ import { PrimaryButton, TextInput } from '../common/ui-kit';
 import {UserImage} from '../common/component-area';
 import ReactModal from 'react-modal';
 import {postReply} from '../mobx/tweet/operations';
-
+import CardHeader from '@material-ui/core/CardHeader';
 
 class PostReply extends React.Component {
 
@@ -27,6 +27,7 @@ class PostReply extends React.Component {
 
     render(){
         const replyedTweet = this.props.selectedReplyedTweet;
+        const userData = this.props.userData;
 
         return(
             <div>
@@ -43,12 +44,27 @@ class PostReply extends React.Component {
                     }}
                 >
                     <Card className="row-margin">
+                        {/* replyed */}
+                        <CardHeader
+                            avatar={
+                                <UserImage path={replyedTweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
+                            }
+                            title={replyedTweet.userName}
+                            subheader={replyedTweet.updated_at.toDate().toDateString()}
+                        />
                         <CardContent>
-                            <UserImage path={replyedTweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
                             <Typography variant="body2" color="textSecondary" component="p">
                                 {replyedTweet.content}
                             </Typography>
-                            <UserImage path={this.props.userImageUrl} style={{width: '40px', height: '40px'}}/>
+                        </CardContent>
+                        {/* reply */}
+                        <CardHeader
+                            avatar={
+                                <UserImage path={userData && userData.userImageUrl} style={{width: '40px', height: '40px'}}/>
+                            }
+                            title={userData && userData.userName}
+                        />
+                        <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
                                 <TextInput
                                     isFullWidth={true} label={'reply tweet'} isMultiline={true} isRequired={true}

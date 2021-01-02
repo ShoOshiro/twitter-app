@@ -98,7 +98,7 @@ class DisplayTweets extends React.Component {
                         shouldDisplayReply={this.state.shouldDisplayReply}
                         selectedReplyedTweet={this.state.selectedReplyedTweet}
                         onClose={this.onClose}
-                        userImageUrl={userData.userImageUrl}
+                        userData={userData}
                     />
                 }
             </div>
