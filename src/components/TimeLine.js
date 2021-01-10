@@ -22,8 +22,8 @@ class TimeLine extends React.Component{
         const userData = this.props.UserStore
 
         return(
-            <div>
-                <PostTweet/>
+            <div className='container'>
+                <PostTweet userData={userData}/>
                 <DisplayTweets tweets={tweets} replyList={replyList} userData={userData}/>
             </div>
         )

@@ -6,6 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
+import {UserImage} from '../common/component-area';
 
 class PostTweet extends React.Component {
     constructor(props){
@@ -30,7 +31,7 @@ class PostTweet extends React.Component {
                     <CardHeader
                         avatar={
                         <Avatar aria-label="recipe">
-                            R
+                            {<UserImage path={this.props.userData.userImageUrl} style={{width: '40px', height: '40px'}}/>}
                         </Avatar>
                         }
                         title="What is happening?"
