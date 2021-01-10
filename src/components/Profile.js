@@ -39,7 +39,7 @@ class Profile extends React.Component {
 
     displayTab = (tweets) => {
         if(this.state.selectTab === 0){
-            return <DisplayTweets tweets={tweets}/> 
+            return <DisplayTweets tweets={tweets} replyList={this.props.TweetStore.replyList}/> 
         }else if(this.state.selectTab === 1){
             return <h2>'Good' will be displayed. It is under construction.</h2>
         }

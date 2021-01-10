@@ -39,20 +39,27 @@ export const fetchTweets = () => {
 
     query.get()
         .then(snapshots => {
+            // after fetching tweets with reply tweets, set data to store.
             const tweetList = []
-            snapshots.forEach(snapshot => {
-                const tweet = snapshot.data()
-                tweetList.push(tweet)
-            })
-            console.log('fetch tweets is successful.')
+            snapshots.forEach(snapshot => tweetList.push(snapshot.data()));
+            tweetList.map((tweet) => {
+                if(tweet.replyIds.length){
+                    // after fetching reply tweets, push reply tweet to tweet list.
+                    _fetchReplyTweetsPromise(tweet.replyIds)
+                }
+            });
             TweetStore.setTweetList(tweetList)
-        })    
+        })
 }
 
-export const fetchSelectedTweet = (tweetId) => {
+export const fetchSelectedTweetWithReplys = (tweetId) => {
     tweetsRef.doc(tweetId).get()
         .then((snapshot) => {
-            TweetStore.setSelectedTweet(snapshot.data())
+            const selectedTweet = snapshot.data()
+            if(selectedTweet.replyIds){
+                _fetchReplyTweetsPromise(selectedTweet.replyIds)
+            }
+            TweetStore.setSelectedTweet(selectedTweet)
         })
 }
 
@@ -66,6 +73,17 @@ export const fetchOwnTweets = (uid) => {
             })
             TweetStore.setTweetList(ownTweetList)
         })
+}
+
+const _fetchReplyTweetsPromise = (replyIds) => {
+    const query = replyTweetsRef.where('id', 'in', replyIds);
+    query.get().then((snapshots) => {
+        const replyList = []
+        snapshots.forEach((snapshot) => {
+            replyList.push(snapshot.data())
+        })
+        TweetStore.setReplyList(replyList)
+    })
 }
 
 export const deleteTweet = (tweetId) => {

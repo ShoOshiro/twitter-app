@@ -18,12 +18,13 @@ class TimeLine extends React.Component{
 
     render(){
         const tweets = this.props.TweetStore.tweets
+        const replyList = this.props.TweetStore.replyList
         const userData = this.props.UserStore
 
         return(
             <div>
                 <PostTweet/>
-                <DisplayTweets tweets={tweets} userData={userData}/>
+                <DisplayTweets tweets={tweets} replyList={replyList} userData={userData}/>
             </div>
         )
     }
