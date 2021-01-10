@@ -35,10 +35,6 @@ class TweetCard extends React.Component {
         this.setState({shouldDisplayReply: true, selectedReplyedTweet: tweet})
     }
 
-    onClose = () => {
-        this.setState({shouldDisplayReply: false})
-    }
-
     toTweetDetail = (tweet) => {
         this.props.history.push(`/tweet/detail/${tweet.id}`);
     }
