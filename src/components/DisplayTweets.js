@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer, inject } from "mobx-react";
 import { withRouter } from 'react-router';
-import {deleteTweet} from '../mobx/tweet/operations';
 import {PostReply} from './';
 import {TweetCard} from '../common/component-area';
 
@@ -11,17 +10,6 @@ class DisplayTweets extends React.Component {
     constructor(props){
         super(props)
         this.state = {shouldDisplayReply: false, selectedReplyedTweet: {}}
-    }
-
-    // TODO: handling clicked menu should move to common directory.
-    handleClickMenu = (clickedIndex, tweetId) => {
-        switch(clickedIndex){
-            case 0:
-                deleteTweet(tweetId)
-                break;
-            default:
-                break;
-        }
     }
 
     handleClickReply = (tweet) => {
@@ -36,7 +24,7 @@ class DisplayTweets extends React.Component {
         const replyList = this.props.replyList
         const filterdReply = replyList.find((replyTweet) => replyTweet.id === replyId)
         if(filterdReply){
-            return <TweetCard key={filterdReply.id} tweet={filterdReply}/>
+            return <TweetCard key={filterdReply.id} tweet={filterdReply} userData={userData}/>
         }
     }
 
@@ -49,7 +37,7 @@ class DisplayTweets extends React.Component {
                     tweets.map((tweet) => {
                         return(
                             <div>
-                                <TweetCard key={tweet.id} tweet={tweet} handleClickReply={this.handleClickReply}/>
+                                <TweetCard key={tweet.id} tweet={tweet} handleClickReply={this.handleClickReply} userData={userData}/>
                                 {tweet.replyIds.map((replyId) => {
                                     return this.renderReplys(replyId)
                                 })}

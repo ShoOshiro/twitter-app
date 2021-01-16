@@ -2,7 +2,6 @@ import React from 'react';
 import { MenuButton} from '../ui-kit';
 import {UserImage} from './';
 import { withRouter } from 'react-router';
-import {deleteTweet} from '../../mobx/tweet/operations';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,23 +13,13 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 class TweetCard extends React.Component {
 
-    // TODO: handling clicked menu should move to common directory.
-    handleClickMenu = (clickedIndex, tweetId) => {
-        switch(clickedIndex){
-            case 0:
-                deleteTweet(tweetId)
-                break;
-            default:
-                break;
-        }
-    }
-
     toTweetDetail = (tweet) => {
         this.props.history.push(`/tweet/detail/${tweet.id}`);
     }
 
     render(){
         const tweet = this.props.tweet;
+        const userData = this.props.userData;
         return(
             <div>
                 <Card className="row-margin" key={tweet.id}>
@@ -38,14 +27,7 @@ class TweetCard extends React.Component {
                             avatar={
                                 <UserImage path={tweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
                             }
-                            action={
-                                <MenuButton
-                                    tweetId={tweet.id}
-                                    iconName={"format_list_bulleted"}
-                                    items={["Delete", "profile"]}
-                                    handleClickMenu={this.handleClickMenu}
-                                />
-                            }
+                            action={userData.uid === tweet.uid && <MenuButton tweetId={tweet.id}/>}
                             title={tweet.userName}
                             subheader={tweet.updated_at && tweet.updated_at.toDate().toDateString()}
                         />

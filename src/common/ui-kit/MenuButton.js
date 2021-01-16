@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Icon from '@material-ui/core/Icon';
+import {deleteTweet} from '../../mobx/tweet/operations';
 
 class MenuButton extends React.Component {
 
@@ -10,6 +11,12 @@ class MenuButton extends React.Component {
     super(props)
     this.state={anchorEl: ''}
   }
+
+  handleClickMenu = (item) => {
+    if(item === 'Delete'){
+      deleteTweet(this.props.tweetId);
+    }
+}
 
   handleClick = (event) => {
     this.setState({anchorEl: event.currentTarget})
@@ -20,15 +27,15 @@ class MenuButton extends React.Component {
     if(isNaN(clickedIndex)){
       return
     }
-    this.props.handleClickMenu(clickedIndex, this.props.tweetId)
+    this.handleClickMenu(clickedIndex)
   };
 
   renderMenuItems = () => {
-    const {items} = this.props;
+    const items = ["Delete"]
     return (
       items.map((item, i) => {
         return(
-          <MenuItem key={i} onClick={this.handleClose.bind(this, i)}>{item}</MenuItem>
+          <MenuItem key={i} onClick={this.handleClose.bind(this, item)}>{item}</MenuItem>
         )
       })
     )
@@ -37,7 +44,7 @@ class MenuButton extends React.Component {
     return (
       <div>
         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
-          <Icon>{this.props.iconName}</Icon>
+          <Icon>{"format_list_bulleted"}</Icon>
         </Button>
         <Menu
           id="simple-menu"
