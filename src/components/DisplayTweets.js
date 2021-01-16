@@ -24,7 +24,7 @@ class DisplayTweets extends React.Component {
         const replyList = this.props.replyList
         const filterdReply = replyList.find((replyTweet) => replyTweet.id === replyId)
         if(filterdReply){
-            return <TweetCard key={filterdReply.id} tweet={filterdReply} userData={userData}/>
+            return <TweetCard key={filterdReply.id} tweet={filterdReply} userData={this.props.userData}/>
         }
     }
 
