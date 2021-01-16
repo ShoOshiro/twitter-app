@@ -46,7 +46,6 @@ class EditProfile extends React.Component {
                         }
                     }}
                 >
-                    <h1>Edit Profile</h1>
                     <UserImage path={this.props.userData.userImageUrl} />
                     <ImageArea setSelectedFile={this.setSelectedFile} />
                     <TextInput

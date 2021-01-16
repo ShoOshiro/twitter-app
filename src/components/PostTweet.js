@@ -21,7 +21,9 @@ class PostTweet extends React.Component {
     }
 
     postTweet = () => {
-        postTweet(this.state.tweetContent)
+        if(this.state.tweetContent !== '') {
+            postTweet(this.state.tweetContent)
+        }
     }
 
     render(){

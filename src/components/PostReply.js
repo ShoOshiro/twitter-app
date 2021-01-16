@@ -21,7 +21,9 @@ class PostReply extends React.Component {
     }
 
     postReply = () => {
-        postReply(this.props.selectedReplyedTweet, this.state.replyContent);
+        if(this.state.replyContent !== '') {
+            postReply(this.props.selectedReplyedTweet, this.state.replyContent);
+        }
         this.setState({replyContent: ""})
     }
 
