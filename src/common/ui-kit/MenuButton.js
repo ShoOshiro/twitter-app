@@ -4,47 +4,53 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Icon from '@material-ui/core/Icon';
 
-const MenuButton = (props) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+class MenuButton extends React.Component {
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  constructor(props){
+    super(props)
+    this.state={anchorEl: ''}
+  }
+
+  handleClick = (event) => {
+    this.setState({anchorEl: event.currentTarget})
   };
 
-  const handleClose = (clickedIndex) => {
-    setAnchorEl(null);
+  handleClose = (clickedIndex) => {
+    this.setState({anchorEl: ''})
     if(isNaN(clickedIndex)){
       return
     }
-    props.handleClickMenu(clickedIndex, props.tweetId)
+    this.props.handleClickMenu(clickedIndex, this.props.tweetId)
   };
 
-  const menuItems = () => {
-    const {items} = props;
+  renderMenuItems = () => {
+    const {items} = this.props;
     return (
       items.map((item, i) => {
         return(
-          <MenuItem key={i} onClick={handleClose.bind(this, i)}>{item}</MenuItem>
+          <MenuItem key={i} onClick={this.handleClose.bind(this, i)}>{item}</MenuItem>
         )
       })
     )
   }
-
-  return (
-    <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        <Icon>{props.iconName}</Icon>
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {menuItems()}
-      </Menu>
-    </div>
-  );
+  render(){
+    return (
+      <div>
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
+          <Icon>{this.props.iconName}</Icon>
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.anchorEl}
+          keepMounted
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleClose}
+        >
+          {this.renderMenuItems()}
+        </Menu>
+      </div>
+    );
+  }
 }
+
 export default MenuButton;

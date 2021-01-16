@@ -34,7 +34,6 @@ class TweetCard extends React.Component {
         return(
             <div>
                 <Card className="row-margin" key={tweet.id}>
-                    <CardActionArea onClick={this.toTweetDetail.bind(this, tweet)}>
                         <CardHeader
                             avatar={
                                 <UserImage path={tweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
@@ -50,6 +49,7 @@ class TweetCard extends React.Component {
                             title={tweet.userName}
                             subheader={tweet.updated_at && tweet.updated_at.toDate().toDateString()}
                         />
+                    <CardActionArea onClick={this.toTweetDetail.bind(this, tweet)}>
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
                                 {tweet.content}
