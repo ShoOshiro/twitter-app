@@ -46,47 +46,50 @@ class PostReply extends React.Component {
                     }}
                 >
                     <Card className="row-margin">
-                        {/* replyed */}
-                        <CardHeader
-                            avatar={
-                                <UserImage path={replyedTweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
-                            }
-                            title={replyedTweet.userName}
-                            subheader={replyedTweet.updated_at && replyedTweet.updated_at.toDate().toDateString()}
-                        />
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {replyedTweet.content}
-                            </Typography>
-                        </CardContent>
-                        {/* reply */}
-                        <CardHeader
-                            avatar={
-                                <UserImage path={userData && userData.userImageUrl} style={{width: '40px', height: '40px'}}/>
-                            }
-                            title={userData && userData.userName}
-                        />
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                <TextInput
-                                    isFullWidth={true} label={'reply tweet'} isMultiline={true} isRequired={true}
-                                    rows={5} value={this.state.replyContent} type={'text'} onChange={this.inputReplyContent}
+                        <div className='post-reply-replyed'>
+                            <CardHeader
+                                avatar={
+                                    <UserImage path={replyedTweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
+                                }
+                                title={replyedTweet.userName}
+                                subheader={replyedTweet.updated_at && replyedTweet.updated_at.toDate().toDateString()}
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    {replyedTweet.content}
+                                </Typography>
+                            </CardContent>
+                        </div>
+                        <div className='post-reply-reply'>
+                            <CardHeader
+                                avatar={
+                                    <UserImage path={userData && userData.userImageUrl} style={{width: '40px', height: '40px'}}/>
+                                }
+                                title={userData && userData.userName}
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    <TextInput
+                                        isFullWidth={true} label={'reply tweet'} isMultiline={true} isRequired={true}
+                                        rows={5} value={this.state.replyContent} type={'text'} onChange={this.inputReplyContent}
+                                    />
+                                </Typography>
+                            </CardContent>
+                            <CardActions disableSpacing>
+                                <PrimaryButton
+                                    style={{'margin-right': '6px'}}
+                                    label={'Reply'}
+                                    onClick = { () => {
+                                        this.postReply();
+                                        this.props.onClose();
+                                    }}
                                 />
-                            </Typography>
-                        </CardContent>
-                        <CardActions disableSpacing>
-                            <PrimaryButton
-                                label={'Reply'}
-                                onClick = { () => {
-                                    this.postReply();
-                                    this.props.onClose();
-                                }}
-                            />
-                            <PrimaryButton
-                                label={'Cancel'}
-                                onClick={this.props.onClose}
-                            />
-                        </CardActions>
+                                <PrimaryButton
+                                    label={'Cancel'}
+                                    onClick={this.props.onClose}
+                                />
+                            </CardActions>
+                        </div>
                     </Card>
                 </ReactModal>
             </div>
