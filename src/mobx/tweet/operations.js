@@ -56,7 +56,7 @@ export const fetchSelectedTweetWithReplys = (tweetId) => {
     tweetsRef.doc(tweetId).get()
         .then((snapshot) => {
             const selectedTweet = snapshot.data()
-            if(selectedTweet.replyIds){
+            if(selectedTweet.replyIds.length){
                 _fetchReplyTweetsPromise(selectedTweet.replyIds)
             }
             TweetStore.setSelectedTweet(selectedTweet)
@@ -103,6 +103,7 @@ export const postReply = (selectedTweet, replyContent) => {
         userName: UserStore.userName,
         userImageUrl: UserStore.userImageUrl,
         content: replyContent,
+        replyIds: []
     }
     const ref = replyTweetsRef.doc();
     const id = ref.id

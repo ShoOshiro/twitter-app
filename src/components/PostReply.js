@@ -50,7 +50,7 @@ class PostReply extends React.Component {
                                 <UserImage path={replyedTweet.userImageUrl} style={{width: '40px', height: '40px'}}/>
                             }
                             title={replyedTweet.userName}
-                            subheader={replyedTweet.updated_at.toDate().toDateString()}
+                            subheader={replyedTweet.updated_at && replyedTweet.updated_at.toDate().toDateString()}
                         />
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">

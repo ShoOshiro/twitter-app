@@ -17,7 +17,7 @@ const SideMenu = (props) => {
     }
 
     return(
-        <div>
+        <div className='side-menu'>
             <List>
                 {menuNameList.map((menuName, i) => {
                     return(

@@ -36,7 +36,7 @@ class TweetDetail extends React.Component {
         return(
             <div className='container'>
                 <TweetCard tweet={selectedTweet} />
-                {selectedTweet.replyIds.map((replyId) => {
+                {selectedTweet.replyIds && selectedTweet.replyIds.map((replyId) => {
                     return this.renderReplys(replyId)
                 })}
                 {this.state.shouldDisplayReply && 

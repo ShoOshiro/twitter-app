@@ -10,15 +10,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 class TweetCard extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {shouldDisplayReply: false, selectedReplyedTweet: {}}
-    }
 
     // TODO: handling clicked menu should move to common directory.
     handleClickMenu = (clickedIndex, tweetId) => {
@@ -29,10 +23,6 @@ class TweetCard extends React.Component {
             default:
                 break;
         }
-    }
-
-    handleClickReply = (tweet) => {
-        this.setState({shouldDisplayReply: true, selectedReplyedTweet: tweet})
     }
 
     toTweetDetail = (tweet) => {
@@ -58,7 +48,7 @@ class TweetCard extends React.Component {
                                 />
                             }
                             title={tweet.userName}
-                            subheader={tweet.updated_at.toDate().toDateString()}
+                            subheader={tweet.updated_at && tweet.updated_at.toDate().toDateString()}
                         />
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
@@ -67,14 +57,8 @@ class TweetCard extends React.Component {
                         </CardContent>
                     </CardActionArea>
                     <CardActions disableSpacing>
-                        <IconButton aria-label="reply" onClick={this.handleClickReply.bind(this, tweet)}>
+                        <IconButton aria-label="reply" onClick={() => this.props.handleClickReply(tweet)}>
                             <ChatBubbleOutlineIcon />
-                        </IconButton>
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
-                        </IconButton>
-                        <IconButton aria-label="share">
-                            <ShareIcon />
                         </IconButton>
                     </CardActions>
                 </Card>

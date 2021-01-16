@@ -24,6 +24,10 @@ class DisplayTweets extends React.Component {
         }
     }
 
+    handleClickReply = (tweet) => {
+        this.setState({shouldDisplayReply: true, selectedReplyedTweet: tweet})
+    }
+
     onClose = () => {
         this.setState({shouldDisplayReply: false})
     }
@@ -45,7 +49,7 @@ class DisplayTweets extends React.Component {
                     tweets.map((tweet) => {
                         return(
                             <div>
-                                <TweetCard key={tweet.id} tweet={tweet}/>
+                                <TweetCard key={tweet.id} tweet={tweet} handleClickReply={this.handleClickReply}/>
                                 {tweet.replyIds.map((replyId) => {
                                     return this.renderReplys(replyId)
                                 })}
