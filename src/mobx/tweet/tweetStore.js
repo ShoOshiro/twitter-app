@@ -4,7 +4,8 @@ import {makeObservable, observable, action, computed} from 'mobx';
 class TweetStore{
 
     @observable tweets = []
-    @observable selectedTweet = null;
+    @observable selectedTweet = [];
+    @observable replyList = [];
     
     constructor() {
         makeObservable(this)
@@ -12,8 +13,10 @@ class TweetStore{
 
     @action setTweetList = (tweetList) => {
         this.tweets = tweetList;
-        console.log("setTweetList. tweets are follow.");
-        console.log(this.tweets);
+    }
+
+    @action setReplyList = (replyList) => {
+        this.replyList = replyList;
     }
 
     @action setSelectedTweet = (selectedTweet) => {

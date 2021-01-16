@@ -1,68 +1,52 @@
 import React from 'react'
 import { observer, inject } from "mobx-react"
-import {fetchSelectedTweet} from '../mobx/tweet/operations'
-import { MenuButton} from '../common/ui-kit'
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import {fetchSelectedTweetWithReplys} from '../mobx/tweet/operations'
+import {PostReply} from './';
+import {TweetCard} from '../common/component-area'
 
-@inject('TweetStore')
+@inject('TweetStore', 'UserStore')
 @observer
 class TweetDetail extends React.Component {
     constructor(props){
         super(props);
+        this.state = {shouldDisplayReply: false, selectedReplyedTweet: {}}
     }
 
     componentDidMount = () => {
-        fetchSelectedTweet(this.props.match.params.tweetId)
+        fetchSelectedTweetWithReplys(this.props.match.params.tweetId)
+    }
+
+    onClose = () => {
+        this.setState({shouldDisplayReply: false})
+    }
+
+    renderReplys = (replyId) => {
+        const replyList = this.props.TweetStore.replyList;
+        const filterdReply = replyList.find((replyTweet) => replyTweet.id === replyId)
+        if(filterdReply){
+            return <TweetCard key={filterdReply.id} tweet={filterdReply}/>
+        }
     }
 
     render(){
+        // TODO: You need refactor because there is common info between DisplayTweets.js and PostReply.js.
+        //       Card Component are used in many files.
         const selectedTweet = this.props.TweetStore.selectedTweet;
+        const userData = this.props.UserStore;
         return(
             <div className='container'>
-                <Card>
-                    <CardHeader
-                        avatar={
-                        <Avatar aria-label="recipe">
-                            R
-                        </Avatar>
-                        }
-                        action={
-                            <MenuButton
-                                tweetId={selectedTweet && selectedTweet.id}
-                                iconName={"format_list_bulleted"}
-                                items={["Delete", "profile"]}
-                                handleClickMenu={this.handleClickMenu}
-                            />
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader={selectedTweet && selectedTweet.updated_at.toDate().toDateString()}
+                <TweetCard tweet={selectedTweet} />
+                {selectedTweet.replyIds.map((replyId) => {
+                    return this.renderReplys(replyId)
+                })}
+                {this.state.shouldDisplayReply && 
+                    <PostReply
+                        shouldDisplayReply={this.state.shouldDisplayReply}
+                        selectedReplyedTweet={this.state.selectedReplyedTweet}
+                        onClose={this.onClose}
+                        userData={userData}
                     />
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {selectedTweet && selectedTweet.content}
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>
-                        <IconButton aria-label="reply">
-                            <ChatBubbleOutlineIcon />
-                        </IconButton>
-                        <IconButton aria-label="add to favorites">
-                            <FavoriteIcon />
-                        </IconButton>
-                        <IconButton aria-label="share">
-                            <ShareIcon />
-                        </IconButton>
-                    </CardActions>
-                </Card>
+                }
             </div>
         )
     }

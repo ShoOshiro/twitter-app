@@ -6,6 +6,7 @@ export {default as TimeLine} from './TimeLine'
 export {default as PostTweet} from './PostTweet'
 export {default as DisplayTweets} from './DisplayTweets'
 export {default as TweetDetail} from './TweetDetail'
+export {default as PostReply} from './PostReply'
 
 export {default as Profile} from './Profile'
 export {default as EditProfile} from './EditProfile'
