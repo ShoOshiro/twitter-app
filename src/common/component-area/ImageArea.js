@@ -1,6 +1,5 @@
 import React from 'react'
-import IconButton from '@material-ui/core/ListItemIcon'
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import {UserImage} from './'
 
 class ImageArea extends React.Component{
     constructor(props){
@@ -9,30 +8,24 @@ class ImageArea extends React.Component{
     }
     
     onChange = e => {
-        this.setState({selectedFile: e.target.files[0]});
-
-        const selectedFile = e.target.files[0];
         let reader = new FileReader();
-        let imgtag = document.getElementById("selected-image");
-        imgtag.title = selectedFile.name;
+        const that = this;
         reader.onload = function(event) {
-            imgtag.src = event.target.result;
+            that.setState({selectedFile: event.target.result});
         };
+        const selectedFile = e.target.files[0]
         reader.readAsDataURL(selectedFile);
-
         this.props.setSelectedFile(selectedFile);
     };
 
     render(){
+        const path = this.state.selectedFile ? this.state.selectedFile : this.props.path
         return(
             <div>
-                <img style={{float:'left', width: "15%" }} id="selected-image" alt="" />
-                <IconButton>
-                    <label>
-                        <AddPhotoAlternateIcon />
-                        <input type='file' id='image' onChange={this.onChange} />
-                    </label>
-                </IconButton>
+                <label>
+                    <UserImage path={path} style={{width: '100px', height: '100px'}}/>
+                    <input type='file' className='select-image' onChange={this.onChange} />
+                </label>
             </div>
         )
     }
