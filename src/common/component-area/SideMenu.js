@@ -6,13 +6,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FolderIcon from '@material-ui/icons/Folder';
+import {signOut} from '../../mobx/user/operations'
 
 const SideMenu = (props) => {
 
-    const menuNameList = ["Timeline", "Profile"];
+    const menuNameList = ["Timeline", "Profile", "SignOut"];
     const menuPath = {"Timeline": TIMELINE_PATH, "Profile": PROFILE_PATH};
 
     const handleClick = (menuName) => {
+        if(menuName === 'SignOut'){
+            signOut(props.history)
+            return;
+        }
         props.history.push(menuPath[menuName]);
     }
 
