@@ -22,12 +22,9 @@ class MenuButton extends React.Component {
     this.setState({anchorEl: event.currentTarget})
   };
 
-  handleClose = (clickedIndex) => {
+  handleClose = (item) => {
     this.setState({anchorEl: ''})
-    if(isNaN(clickedIndex)){
-      return
-    }
-    this.handleClickMenu(clickedIndex)
+    this.handleClickMenu(item)
   };
 
   renderMenuItems = () => {
